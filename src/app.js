@@ -1,7 +1,6 @@
 /*! SlackPeb by ryanpcmcquen v1.0 */
 /*global require*/
 /*jslint browser:true, white:true*/
-
 // Declare all variables.
 var UI = require('ui');
 var ajax = require('ajax');
@@ -16,17 +15,23 @@ var ajax = require('ajax');
     style: 'small'
   });
 
+  /*
   var parser = function (data) {
     var cardUpdate = function () {
+      card.title("Slackware");
       card.body(data);
-      console.log(data);
     };
     cardUpdate();
   };
 
   var wires = {
-    url: 'http://slackware.osuosl.org/slackware-current/ChangeLog.txt',
+
+    url: 'https://mirrors.kernel.org/slackware/slackware-current/ChangeLog.txt',
+    //url: 'http://slackware.osuosl.org/slackware-current/ChangeLog.txt'//,
     type: 'text'
+
+    url: 'http://slackware-changelog.oprod.net/atom_feed/',
+    type: 'xml'
   };
 
   var ajaxCaller = function () {
@@ -36,9 +41,19 @@ var ajax = require('ajax');
     }, parser);
   };
 
-  // this is the actual program
+  // This is the actual program.
   ajaxCaller();
+  */
+  var xhr = new XMLHttpRequest();
+  xhr.open('get', 'http://slackware-changelog.oprod.net/atom_feed/');
 
-  card.show();
+
+
+  xhr.addEventListener('load', function () {
+    card.body(xhr.responseText);
+    card.show();
+  });
+  xhr.send();
+
 
 }());
